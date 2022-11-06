@@ -79,7 +79,7 @@ namespace Terra
             enableButtons = false;
             enableInput = false;
             inputID = -1;
-            user = new AppUser("Firstname Lastname", "", "123-456-7890", "1234 Main St", "");
+            user = new AppUser("Firstname Lastname", "fml100000@utdallas.edu", "123-456-7890", "1234 Main St", "Password");
             toOutput = new char();
 
             buttons = new List<Button>();
@@ -265,6 +265,7 @@ namespace Terra
                             typedInput[0] = "";
                             typedInput[1] = "";
                             enableButtons = false;
+                            outputs[5].color = Color.White;
                             state = AppState.Login;
 
                             for (int b = 0; b < buttons.Count; b++)
