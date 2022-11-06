@@ -260,10 +260,14 @@ namespace Terra
                                 outputs[5].color = Color.Red;
                             break;
                         case 3:
-                            inputs[0].op.str = "Email: ";
-                            inputs[1].op.str = "Password: ";
-                            typedInput[0] = "";
-                            typedInput[1] = "";
+                            if (!checks[0].active)
+                            {
+                                inputs[0].op.str = "Email: ";
+                                inputs[1].op.str = "Password: ";
+                                typedInput[0] = "";
+                                typedInput[1] = "";
+                            }
+
                             enableButtons = false;
                             outputs[5].color = Color.White;
                             state = AppState.Login;
