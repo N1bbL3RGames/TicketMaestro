@@ -41,6 +41,7 @@ namespace Terra
         public List<Output> outputs;
         public List<TextBox> inputs;
         public List<TextButton> textButtons;
+        public List<ImageButton> imageButtons;
         public List<CheckBox> checks;
         private List<string> typedInput;
 
@@ -49,9 +50,10 @@ namespace Terra
         public bool enableButtons;
         public bool enableInput;
         public int inputID;
-        public string email;
-        private string password;
         public char toOutput;
+        public AppUser user;
+
+        //User Variables
 
         public Game1() : base()
         {
@@ -77,8 +79,7 @@ namespace Terra
             enableButtons = false;
             enableInput = false;
             inputID = -1;
-            email = "fml100000" + Convert.ToChar(64) + "utdallas.edu";
-            password = "Password";
+            user = new AppUser("Firstname Lastname", "", "123-456-7890", "1234 Main St", "");
             toOutput = new char();
 
             buttons = new List<Button>();
@@ -86,6 +87,7 @@ namespace Terra
             outputs = new List<Output>();
             inputs = new List<TextBox>();
             textButtons = new List<TextButton>();
+            imageButtons = new List<ImageButton>();
             checks = new List<CheckBox>();
             typedInput = new List<string>();
 
@@ -104,9 +106,9 @@ namespace Terra
 
             //Any AppState UI
             buttons.Add(new Button(
-                new Image(blank, new Rectangle(1, 651, 88, 88), Color.DarkGreen),
-                new Image(home, new Rectangle(30, 666, 30, 30), Color.White),
-                new Output(small, new Vector2(28, 706), "Home", Color.White), AppState.Any));
+                new Image(blank, new Rectangle(1, 651, 88, 88), Color.LightGreen),
+                new Image(home, new Rectangle(30, 666, 30, 30), Color.Black),
+                new Output(small, new Vector2(28, 706), "Home", Color.Black), AppState.Any));
             buttons.Add(new Button(
                 new Image(blank, new Rectangle(91, 651, 88, 88), Color.LightGreen),
                 new Image(plan, new Rectangle(110, 656, 50, 50), Color.Black),
@@ -119,8 +121,8 @@ namespace Terra
                 new Image(blank, new Rectangle(271, 651, 88, 88), Color.LightGreen),
                 new Image(profile, new Rectangle(300, 666, 30, 30), Color.Black),
                 new Output(small, new Vector2(298, 706), "Profile", Color.Black), AppState.Any));
-            images.Add(new Image(bell, new Rectangle(270, 15, 30, 30), Color.Black, AppState.Any));
-            images.Add(new Image(gear, new Rectangle(315, 15, 30, 30), Color.Black, AppState.Any));
+            imageButtons.Add(new ImageButton(new Image(bell, new Rectangle(270, 15, 30, 30), Color.Black), AppState.Any));
+            imageButtons.Add(new ImageButton(new Image(gear, new Rectangle(315, 15, 30, 30), Color.Black), AppState.Any));
             outputs.Add(new Output(header, new Vector2(35, 20), "Ticket Maestro", Color.White, AppState.Any));
 
             //Login AppState UI
@@ -129,22 +131,55 @@ namespace Terra
             outputs.Add(new Output(prompt, new Vector2(35, 565), "No Account?", Color.Black, AppState.Login));
             outputs.Add(new Output(small, new Vector2(230, 240), "Remember Me", Color.Black, AppState.Login));
             outputs.Add(new Output(small, new Vector2(65, 330), "Incorrect email or password, try again.", Color.White, AppState.Login));
-
             inputs.Add(new TextBox(blank, new Rectangle(35, 130, 290, 40),
-                new Output(small, new Vector2(40, 145), "Email: ", Color.Black), email, AppState.Login));
+                new Output(small, new Vector2(40, 145), "Email: ", Color.Black), user.email, AppState.Login));
             inputs.Add(new TextBox(blank, new Rectangle(35, 180, 290, 40),
-                new Output(small, new Vector2(40, 195), "Password: ", Color.Black), password, AppState.Login));
-            typedInput.Add("");
-            typedInput.Add("");
-
+                new Output(small, new Vector2(40, 195), "Password: ", Color.Black), user.getPassword(), AppState.Login));
             textButtons.Add(new TextButton(new Image(blank, new Rectangle(35, 515, 290, 30), Color.DarkGreen),
                 new Output(small, new Vector2(130, 523), "Password Reset", Color.Black), AppState.Login));
             textButtons.Add(new TextButton(new Image(blank, new Rectangle(35, 590, 290, 30), Color.DarkGreen),
                 new Output(small, new Vector2(154, 598), "Sign Up", Color.Black), AppState.Login));
             textButtons.Add(new TextButton(new Image(blank, new Rectangle(205, 270, 110, 30), Color.DarkGreen),
                 new Output(small, new Vector2(245, 278), "Login", Color.Black), AppState.Login));
-
             checks.Add(new CheckBox(blank, new Rectangle(205, 238, 20, 20), Color.Black, false, AppState.Login));
+
+            //Profile AppState UI
+            outputs.Add(new Output(prompt, new Vector2(35, 100), "Name", Color.Black, AppState.Profile));
+            outputs.Add(new Output(prompt, new Vector2(35, 220), "Phone Number", Color.Black, AppState.Profile));
+            outputs.Add(new Output(prompt, new Vector2(35, 340), "Email Address", Color.Black, AppState.Profile));
+            outputs.Add(new Output(prompt, new Vector2(35, 460), "Address", Color.Black, AppState.Profile));
+            inputs.Add(new TextBox(blank, new Rectangle(35, 130, 290, 40),
+                new Output(small, new Vector2(40, 145), user.name, Color.Black), user.email, AppState.Profile));
+            inputs.Add(new TextBox(blank, new Rectangle(35, 250, 290, 40),
+                new Output(small, new Vector2(40, 265), user.phoneNumber, Color.Black), user.email, AppState.Profile));
+            inputs.Add(new TextBox(blank, new Rectangle(35, 370, 290, 40),
+                new Output(small, new Vector2(40, 385), user.email, Color.Black), user.email, AppState.Profile));
+            inputs.Add(new TextBox(blank, new Rectangle(35, 490, 290, 40),
+                new Output(small, new Vector2(40, 505), user.address, Color.Black), user.email, AppState.Profile));
+            
+            //Settings AppState UI
+            images.Add(new Image(profile, new Rectangle(130, 85, 100, 100), Color.Black, AppState.Settings));
+            outputs.Add(new Output(prompt, new Vector2(128, 190), "Edit Settings", Color.Black, AppState.Settings));
+            textButtons.Add(new TextButton(new Image(blank, new Rectangle(55, 245, 250, 30), Color.DarkGreen),
+                new Output(small, new Vector2(160, 253), "Logout", Color.Black), AppState.Settings));
+            textButtons.Add(new TextButton(new Image(blank, new Rectangle(55, 290, 250, 30), Color.DarkGreen),
+                new Output(small, new Vector2(138, 298), "Change Theme", Color.Black), AppState.Settings));
+            textButtons.Add(new TextButton(new Image(blank, new Rectangle(55, 335, 250, 30), Color.DarkGreen),
+                new Output(small, new Vector2(125, 343), "Toggle Notifications", Color.Black), AppState.Settings));
+            textButtons.Add(new TextButton(new Image(blank, new Rectangle(55, 380, 250, 30), Color.DarkGreen),
+                new Output(small, new Vector2(107, 388), "Manage Payment Options", Color.Black), AppState.Settings));
+            textButtons.Add(new TextButton(new Image(blank, new Rectangle(55, 425, 250, 30), Color.DarkGreen),
+                new Output(small, new Vector2(128, 433), "Change Language", Color.Black), AppState.Settings));
+            textButtons.Add(new TextButton(new Image(blank, new Rectangle(55, 470, 250, 30), Color.DarkGreen),
+                new Output(small, new Vector2(160, 478), "About", Color.Black), AppState.Settings));
+
+            //Default Input Values
+            typedInput.Add("");
+            typedInput.Add("");
+            typedInput.Add(user.name);
+            typedInput.Add(user.phoneNumber);
+            typedInput.Add(user.email);
+            typedInput.Add(user.address);
 
             base.Initialize();
         }
@@ -209,17 +244,51 @@ namespace Terra
 
             for (int a = 0; a < textButtons.Count; a++)
                 if (ms.LeftButton == ButtonState.Pressed && oldMs.LeftButton != ButtonState.Pressed &&
-                    (textButtons[a].btn.app == state || textButtons[a].btn.app == AppState.Any) && mouseRect.Intersects(textButtons[a].btn.rect))
+                    (textButtons[a].app == state || textButtons[a].app == AppState.Any) && mouseRect.Intersects(textButtons[a].btn.rect))
                     switch (a)
                     {
                         case 2:
-                            if (typedInput[0].Equals(email) && typedInput[1].Equals(password))
+                            if (typedInput[0].Equals(user.email) && typedInput[1].Equals(user.getPassword()))
                             {
                                 enableButtons = true;
                                 state = AppState.Home;
+                                buttons[0].btn.color = Color.DarkGreen;
+                                buttons[0].png.color = Color.White;
+                                buttons[0].op.color = Color.White;
                             }
                             else
                                 outputs[5].color = Color.Red;
+                            break;
+                        case 3:
+                            inputs[0].op.str = "Email: ";
+                            inputs[1].op.str = "Password: ";
+                            typedInput[0] = "";
+                            typedInput[1] = "";
+                            enableButtons = false;
+                            state = AppState.Login;
+
+                            for (int b = 0; b < buttons.Count; b++)
+                            {
+                                buttons[b].btn.color = Color.LightGreen;
+                                buttons[b].png.color = Color.Black;
+                                buttons[b].op.color = Color.Black;
+                            }
+                            break;
+                    }
+
+            for (int a = 0; a < imageButtons.Count; a++)
+                if (ms.LeftButton == ButtonState.Pressed && oldMs.LeftButton != ButtonState.Pressed && enableButtons &&
+                    (imageButtons[a].app == state || imageButtons[a].app == AppState.Any) && mouseRect.Intersects(imageButtons[a].png.rect))
+                    switch(a)
+                    {
+                        case 1:
+                            state = AppState.Settings;
+                            for (int b = 0; b < buttons.Count; b++)
+                            {
+                                buttons[b].btn.color = Color.LightGreen;
+                                buttons[b].png.color = Color.Black;
+                                buttons[b].op.color = Color.Black;
+                            }
                             break;
                     }
 
@@ -237,30 +306,36 @@ namespace Terra
 
             if (enableInput)
             {
-                for (int b = 65; b <= 90; b++)
-                    if (kb.IsKeyDown((Keys)b) && !oldKb.IsKeyDown((Keys)b))
-                    {
-                        if (kb.IsKeyDown(Keys.LeftShift))
-                            inputs[inputID].op.str += typeSorter(b, 0);
+                if (typedInput[inputID].Length < 25)
+                {
+                    for (int b = 65; b <= 90; b++)
+                        if (kb.IsKeyDown((Keys)b) && !oldKb.IsKeyDown((Keys)b))
+                        {
+                            if (kb.IsKeyDown(Keys.LeftShift))
+                                inputs[inputID].op.str += typeSorter(b, 0);
 
-                        else
-                            inputs[inputID].op.str += typeSorter(b, 1);
-                    }
+                            else
+                                inputs[inputID].op.str += typeSorter(b, 1);
+                        }
 
-                for (int b = 48; b <= 57; b++)
-                    if (kb.IsKeyDown((Keys)b) && !oldKb.IsKeyDown((Keys)b))
-                    {
-                        if (kb.IsKeyDown(Keys.LeftShift))
-                            inputs[inputID].op.str += typeSorter(b, 2);
+                    for (int b = 48; b <= 57; b++)
+                        if (kb.IsKeyDown((Keys)b) && !oldKb.IsKeyDown((Keys)b))
+                        {
+                            if (kb.IsKeyDown(Keys.LeftShift))
+                                inputs[inputID].op.str += typeSorter(b, 2);
 
-                        else
-                            inputs[inputID].op.str += typeSorter(b, 3);
-                    }
+                            else
+                                inputs[inputID].op.str += typeSorter(b, 3);
+                        }
 
-                if (kb.IsKeyDown(Keys.OemPeriod) && !oldKb.IsKeyDown(Keys.OemPeriod))
-                    inputs[inputID].op.str += typeSorter(-1, 4);
+                    if (kb.IsKeyDown(Keys.OemPeriod) && !oldKb.IsKeyDown(Keys.OemPeriod))
+                        inputs[inputID].op.str += typeSorter(-1, 4);
 
-                if (kb.IsKeyDown((Keys)8) && !oldKb.IsKeyDown((Keys)8) && inputs[inputID].op.str.Length > inputs[inputID].adminLine)
+                    if (kb.IsKeyDown(Keys.Space) && !oldKb.IsKeyDown(Keys.Space))
+                        inputs[inputID].op.str += typeSorter(-1, 5);
+                }
+
+                if (kb.IsKeyDown((Keys)8) && !oldKb.IsKeyDown((Keys)8) && typedInput[inputID].Length > 0)
                 {
                     inputs[inputID].op.str = inputs[inputID].op.str.Substring(0, inputs[inputID].op.str.Length - 1);
                     typedInput[inputID] = typedInput[inputID].Substring(0, typedInput[inputID].Length - 1);
@@ -293,6 +368,11 @@ namespace Terra
             for (int a = 0; a < images.Count; a++)
                 if (images[a].app == state || images[a].app == AppState.Any)
                     spriteBatch.Draw(images[a].text, images[a].rect, images[a].color);
+
+            //Image Buttons
+            for (int a = 0; a < imageButtons.Count; a++)
+                if (imageButtons[a].app == state || imageButtons[a].app == AppState.Any)
+                    spriteBatch.Draw(imageButtons[a].png.text, imageButtons[a].png.rect, imageButtons[a].png.color);
 
             //Text Output
             for (int a = 0; a < outputs.Count; a++)
@@ -454,9 +534,40 @@ namespace Terra
 
                     typedInput[inputID] += '.';
                     break;
+                case 5:
+                    if (inputID != 1)
+                        toOutput = ' ';
+                    else
+                        toOutput = Convert.ToChar(42);
+
+                    typedInput[inputID] += ' ';
+                    break;
             }
 
             return toOutput;
+        }
+
+        public class AppUser
+        {
+            public string name;
+            public string email;
+            public string phoneNumber;
+            public string address;
+            private string password;
+
+            public AppUser(string n, string e, string p, string a, string s)
+            {
+                this.name = n;
+                this.email = e;
+                this.phoneNumber = p;
+                this.address = a;
+                this.password = s;
+            }
+
+            public string getPassword()
+            {
+                return password;
+            }
         }
 
         public class Button
@@ -531,7 +642,6 @@ namespace Terra
             public Output op;
             public string verify;
             public AppState app;
-            public int adminLine;
 
             public TextBox(Texture2D t, Rectangle r, Output o, string v)
             {
@@ -539,7 +649,6 @@ namespace Terra
                 this.rect = r;
                 this.op = o;
                 this.verify = v;
-                this.adminLine = op.str.Length;
             }
 
             public TextBox(Texture2D t, Rectangle r, Output o, string v, AppState a)
@@ -549,7 +658,6 @@ namespace Terra
                 this.op = o;
                 this.verify = v;
                 this.app = a;
-                this.adminLine = op.str.Length;
             }
         }
 
@@ -569,6 +677,23 @@ namespace Terra
             {
                 this.btn = b;
                 this.op = o;
+                this.app = a;
+            }
+        }
+
+        public class ImageButton
+        {
+            public Image png;
+            public AppState app;
+
+            public ImageButton(Image p)
+            {
+                this.png = p;
+            }
+
+            public ImageButton(Image p, AppState a)
+            {
+                this.png = p;
                 this.app = a;
             }
         }
