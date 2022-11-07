@@ -53,8 +53,6 @@ namespace Terra
         public char toOutput;
         public AppUser user;
 
-        //User Variables
-
         public Game1() : base()
         {
             this.graphics = new GraphicsDeviceManager(this);
@@ -173,6 +171,9 @@ namespace Terra
             textButtons.Add(new TextButton(new Image(blank, new Rectangle(55, 470, 250, 30), Color.DarkGreen),
                 new Output(small, new Vector2(160, 478), "About", Color.Black), AppState.Settings));
 
+            //Examples
+            //Hello World
+
             //Default Input Values
             typedInput.Add("");
             typedInput.Add("");
@@ -180,6 +181,7 @@ namespace Terra
             typedInput.Add(user.phoneNumber);
             typedInput.Add(user.email);
             typedInput.Add(user.address);
+            typedInput.Add("Hi");
 
             base.Initialize();
         }
@@ -363,11 +365,12 @@ namespace Terra
 
             //Navigation Buttons
             for (int a = 0; a < buttons.Count; a++)
-            {
-                spriteBatch.Draw(buttons[a].btn.text, buttons[a].btn.rect, buttons[a].btn.color);
-                spriteBatch.Draw(buttons[a].png.text, buttons[a].png.rect, buttons[a].png.color);
-                spriteBatch.DrawString(buttons[a].op.font, buttons[a].op.str, buttons[a].op.vec, buttons[a].op.color);
-            }
+                if(buttons[a].app == state || buttons[a].app == AppState.Any)
+                {
+                    spriteBatch.Draw(buttons[a].btn.text, buttons[a].btn.rect, buttons[a].btn.color);
+                    spriteBatch.Draw(buttons[a].png.text, buttons[a].png.rect, buttons[a].png.color);
+                    spriteBatch.DrawString(buttons[a].op.font, buttons[a].op.str, buttons[a].op.vec, buttons[a].op.color);
+                }
 
             //Icon Images
             for (int a = 0; a < images.Count; a++)
