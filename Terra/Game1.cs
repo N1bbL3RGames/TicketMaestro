@@ -172,7 +172,7 @@ namespace Terra
                 new Output(small, new Vector2(160, 478), "About", Color.Black), AppState.Settings));
 
             //Examples
-            
+            //Hello World
 
             //Default Input Values
             typedInput.Add("");
