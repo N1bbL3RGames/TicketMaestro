@@ -77,8 +77,11 @@ namespace Terra
             enableButtons = false;
             enableInput = false;
             inputID = -1;
-            user = new AppUser("Firstname Lastname", "fml100000@utdallas.edu", "123-456-7890", "1234 Main St", "Password");
             toOutput = new char();
+            user = new AppUser("Firstname Lastname", "fml100000@utdallas.edu", "123-456-7890", "1234 Main St", "Password");
+
+            user.email = "";
+            user.setPassword("");
 
             buttons = new List<Button>();
             images = new List<Image>();
@@ -125,20 +128,20 @@ namespace Terra
 
             //Login AppState UI
             outputs.Add(new Output(prompt, new Vector2(35, 100), "Sign In", Color.Black, AppState.Login));
-            outputs.Add(new Output(prompt, new Vector2(35, 490), "Forgot Password?", Color.Black, AppState.Login));
-            outputs.Add(new Output(prompt, new Vector2(35, 565), "No Account?", Color.Black, AppState.Login));
+            outputs.Add(new Output(prompt, new Vector2(35, 470), "Forgot Password?", Color.Black, AppState.Login));
+            outputs.Add(new Output(prompt, new Vector2(35, 555), "No Account?", Color.Black, AppState.Login));
             outputs.Add(new Output(small, new Vector2(230, 240), "Remember Me", Color.Black, AppState.Login));
             outputs.Add(new Output(small, new Vector2(65, 330), "Incorrect email or password, try again.", Color.White, AppState.Login));
             inputs.Add(new TextBox(blank, new Rectangle(35, 130, 290, 40),
-                new Output(small, new Vector2(40, 145), "Email: ", Color.Black), user.email, AppState.Login));
+                new Output(small, new Vector2(40, 143), "Email: ", Color.Black), user.email, AppState.Login));
             inputs.Add(new TextBox(blank, new Rectangle(35, 180, 290, 40),
-                new Output(small, new Vector2(40, 195), "Password: ", Color.Black), user.getPassword(), AppState.Login));
-            textButtons.Add(new TextButton(new Image(blank, new Rectangle(35, 515, 290, 30), Color.DarkGreen),
-                new Output(small, new Vector2(130, 523), "Password Reset", Color.Black), AppState.Login));
-            textButtons.Add(new TextButton(new Image(blank, new Rectangle(35, 590, 290, 30), Color.DarkGreen),
-                new Output(small, new Vector2(154, 598), "Sign Up", Color.Black), AppState.Login));
-            textButtons.Add(new TextButton(new Image(blank, new Rectangle(205, 270, 110, 30), Color.DarkGreen),
-                new Output(small, new Vector2(245, 278), "Login", Color.Black), AppState.Login));
+                new Output(small, new Vector2(40, 193), "Password: ", Color.Black), user.getPassword(), AppState.Login));
+            textButtons.Add(new TextButton(new Image(blank, new Rectangle(35, 495, 290, 40), Color.DarkGreen),
+                new Output(small, new Vector2(130, 508), "Password Reset", Color.Red), AppState.Login));
+            textButtons.Add(new TextButton(new Image(blank, new Rectangle(35, 580, 290, 40), Color.DarkGreen),
+                new Output(small, new Vector2(154, 593), "Sign Up", Color.Red), AppState.Login));
+            textButtons.Add(new TextButton(new Image(blank, new Rectangle(205, 270, 120, 40), Color.DarkGreen),
+                new Output(small, new Vector2(250, 282), "Login", Color.Black), AppState.Login));
             checks.Add(new CheckBox(blank, new Rectangle(205, 238, 20, 20), Color.Black, false, AppState.Login));
 
             //Profile AppState UI
@@ -158,18 +161,18 @@ namespace Terra
             //Settings AppState UI
             images.Add(new Image(profile, new Rectangle(130, 85, 100, 100), Color.Black, AppState.Settings));
             outputs.Add(new Output(prompt, new Vector2(128, 190), "Edit Settings", Color.Black, AppState.Settings));
-            textButtons.Add(new TextButton(new Image(blank, new Rectangle(55, 245, 250, 30), Color.DarkGreen),
-                new Output(small, new Vector2(160, 253), "Logout", Color.Black), AppState.Settings));
-            textButtons.Add(new TextButton(new Image(blank, new Rectangle(55, 290, 250, 30), Color.DarkGreen),
-                new Output(small, new Vector2(138, 298), "Change Theme", Color.Black), AppState.Settings));
-            textButtons.Add(new TextButton(new Image(blank, new Rectangle(55, 335, 250, 30), Color.DarkGreen),
-                new Output(small, new Vector2(125, 343), "Toggle Notifications", Color.Black), AppState.Settings));
-            textButtons.Add(new TextButton(new Image(blank, new Rectangle(55, 380, 250, 30), Color.DarkGreen),
-                new Output(small, new Vector2(107, 388), "Manage Payment Options", Color.Black), AppState.Settings));
-            textButtons.Add(new TextButton(new Image(blank, new Rectangle(55, 425, 250, 30), Color.DarkGreen),
-                new Output(small, new Vector2(128, 433), "Change Language", Color.Black), AppState.Settings));
-            textButtons.Add(new TextButton(new Image(blank, new Rectangle(55, 470, 250, 30), Color.DarkGreen),
-                new Output(small, new Vector2(160, 478), "About", Color.Black), AppState.Settings));
+            textButtons.Add(new TextButton(new Image(blank, new Rectangle(55, 245, 250, 40), Color.DarkGreen),
+                new Output(small, new Vector2(160, 258), "Logout", Color.Black), AppState.Settings));
+            textButtons.Add(new TextButton(new Image(blank, new Rectangle(55, 300, 250, 40), Color.DarkGreen),
+                new Output(small, new Vector2(138, 313), "Change Theme", Color.Red), AppState.Settings));
+            textButtons.Add(new TextButton(new Image(blank, new Rectangle(55, 355, 250, 40), Color.DarkGreen),
+                new Output(small, new Vector2(125, 368), "Toggle Notifications", Color.Red), AppState.Settings));
+            textButtons.Add(new TextButton(new Image(blank, new Rectangle(55, 410, 250, 40), Color.DarkGreen),
+                new Output(small, new Vector2(107, 423), "Manage Payment Options", Color.Red), AppState.Settings));
+            textButtons.Add(new TextButton(new Image(blank, new Rectangle(55, 465, 250, 40), Color.DarkGreen),
+                new Output(small, new Vector2(128, 478), "Change Language", Color.Red), AppState.Settings));
+            textButtons.Add(new TextButton(new Image(blank, new Rectangle(55, 520, 250, 40), Color.DarkGreen),
+                new Output(small, new Vector2(160, 533), "About", Color.Red), AppState.Settings));
 
             //Examples
             //Hello World
@@ -575,6 +578,65 @@ namespace Terra
             public string getPassword()
             {
                 return password;
+            }
+
+            public void setPassword(string p)
+            {
+                password = p;
+            }
+        }
+
+        public class TicketList
+        {
+            public Output head;
+            public Rectangle box;
+            public List<Ticket> tickets;
+
+            public TicketList(Output h, Rectangle b)
+            {
+                this.head = h;
+                this.box = b;
+                this.tickets = new List<Ticket>();
+            }
+
+            public void addTicket(Ticket t, SpriteFont f, Texture2D m)
+            {
+                Rectangle ticketBox = new Rectangle();
+
+                if (tickets.Count == 0)
+                    ticketBox = new Rectangle(box.X, box.Y, 290, 40);
+                else
+                    ticketBox = new Rectangle(box.X, tickets[tickets.Count - 1].box.Y + 40, 290, 40);
+
+                t.setValues(ticketBox, 
+                    new Image(m, new Rectangle(310, ticketBox.Y + 10, 20, 20), Color.Black), 
+                    new Output(f, new Vector2(ticketBox.X + 10, ticketBox.Y + 13), t.name, Color.Black));
+            }
+        }
+
+        public class Ticket
+        {
+            public string name;
+            public int cost;
+            public string distance;
+            public string time;
+            public Rectangle box;
+            public Image movement;
+            public Output op;
+
+            public Ticket(string n, int c, string d, string t)
+            {
+                this.name = n;
+                this.cost = c;
+                this.distance = d;
+                this.time = t;
+            }
+
+            public void setValues(Rectangle b, Image m, Output o)
+            {
+                box = b;
+                movement = m;
+                op = o;
             }
         }
 
