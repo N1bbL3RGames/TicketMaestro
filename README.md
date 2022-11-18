@@ -9,4 +9,4 @@ For Code Review:
   1. Go to master branch: https://github.com/N1bbL3RGames/TicketMaestro/tree/master
   2. Go to folder: Terra
   3. Go to file: Game1.cs
-    a. Quick link: https://github.com/N1bbL3RGames/TicketMaestro/blob/master/Terra/Game1.cs
+  3a. Quick link: https://github.com/N1bbL3RGames/TicketMaestro/blob/master/Terra/Game1.cs
