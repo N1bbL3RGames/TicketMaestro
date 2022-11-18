@@ -350,6 +350,9 @@ namespace Terra
                     inputs[inputID].op.str = inputs[inputID].op.str.Substring(0, inputs[inputID].op.str.Length - 1);
                     typedInput[inputID] = typedInput[inputID].Substring(0, typedInput[inputID].Length - 1);
                 }
+
+                if (inputID == 4)
+                    user.email = inputs[4].op.str;
             }
 
             oldKb = Keyboard.GetState();
