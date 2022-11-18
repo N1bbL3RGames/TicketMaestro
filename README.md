@@ -8,6 +8,5 @@ For Release Executable:
 For Code Review:
   1. Go to master branch: https://github.com/N1bbL3RGames/TicketMaestro/tree/master
   2. Go to folder: Terra
-  3. Go to file: Game1.cs
-https://github.com/N1bbL3RGames/TicketMaestro/blob/master/Terra/Game1.cs
+  3. Go to file Game1.cs: https://github.com/N1bbL3RGames/TicketMaestro/blob/master/Terra/Game1.cs
 
