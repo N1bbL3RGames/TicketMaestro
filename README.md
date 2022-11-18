@@ -5,6 +5,11 @@ For Release Executable:
   2. Download folder: win-x86
   3. Run application: Terra.exe
 
+Notes For Release Executable:
+  1. Email and password is set to blank
+  2. Buttons with red names do not have functionality
+  3. Settings gear icon and profile pages have data in them
+
 For Code Review:
   1. Go to master branch: https://github.com/N1bbL3RGames/TicketMaestro/tree/master
   2. Go to folder: Terra
