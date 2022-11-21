@@ -63,6 +63,7 @@ namespace Terra
         //App Variables
         private List<string> typedInput;
         public AppState state;
+        public AppState oldState;
         public bool enableButtons;
         public bool enableInput;
         public bool enableSlider;
@@ -78,6 +79,7 @@ namespace Terra
         public double cartTotal;
         public double balance;
         public string savedCard;
+        public string balanceFloat;
 
         public Game1() : base()
         {
@@ -100,6 +102,7 @@ namespace Terra
             mouseRect = new Rectangle(oldMs.X, oldMs.Y, 1, 1);
 
             state = AppState.Login;
+            oldState = state;
             enableButtons = false;
             enableInput = false;
             enableSlider = false;
@@ -113,6 +116,9 @@ namespace Terra
             cartTax = (double)((int)((cartValue * 0.0825) * 100)) / 100;
             cartTotal = cartValue + cartTax;
             balance = 20;
+            balanceFloat = (balance * 100).ToString();
+            balanceFloat = balanceFloat.Insert(balanceFloat.Length - 2, ".");
+            
             savedCard = "1237-9548-8923-7281";
 
             user = new AppUser("Firstname Lastname", "fml100000@utdallas.edu", "123-456-7890", "1234 Main St", "Password");
@@ -256,7 +262,7 @@ namespace Terra
             //Payment Input AppState UI
             outputs.Add(new Output(small, new Vector2(111, 120), "Select Payment Method", Color.Black, AppState.PayInput)); //12
             outputs.Add(new Output(small, new Vector2(135, 170), "Account Credit", Color.Black, AppState.PayInput)); //13
-            outputs.Add(new Output(small, new Vector2(118, 193), "Current Balance: $" + balance, Color.Black, AppState.PayInput)); //14
+            outputs.Add(new Output(small, new Vector2(118, 193), "Current Balance: $" + balanceFloat, Color.Black, AppState.PayInput)); //14
             outputs.Add(new Output(small, new Vector2(135, 263), "PayPal Transfer", Color.Black, AppState.PayInput)); //15
             outputs.Add(new Output(small, new Vector2(135, 330), "Card Ending In:", Color.Black, AppState.PayInput)); //16
             outputs.Add(new Output(small, new Vector2(165, 353), savedCard.Substring(15), Color.Black, AppState.PayInput)); //17
@@ -311,7 +317,7 @@ namespace Terra
             //Add Funds AppState UI
             outputs.Add(new Output(prompt, new Vector2(83, 90), "Manage Payment Options", Color.Black, AppState.AddFunds)); //30
             outputs.Add(new Output(small, new Vector2(35, 390), "Current Card on File: " + savedCard, Color.Black, AppState.AddFunds)); //31
-            outputs.Add(new Output(small, new Vector2(35, 420), "Current Wallet Balance: $" + balance, Color.Black, AppState.AddFunds)); //32
+            outputs.Add(new Output(small, new Vector2(35, 420), "Current Wallet Balance: $" + balanceFloat, Color.Black, AppState.AddFunds)); //32
             containers.Add(new Container(new Rectangle(35, 170, 290, 180), AppState.AddFunds)); //6
             images.Add(new Image(visa, new Rectangle(60, 190, 60, 60), AppState.AddFunds)); //5
             images.Add(new Image(mastercard, new Rectangle(150, 190, 60, 60), AppState.AddFunds)); //6
@@ -531,6 +537,7 @@ namespace Terra
                             else
                             {
                                 outputs[18].color = Color.White;
+                                outputs[26].color = Color.White;
                                 state = AppState.PayConfirm;
                                 activeButton = -1;
                             }
@@ -547,6 +554,22 @@ namespace Terra
 
                                     tickets[0].tickets.RemoveAt(0);
                                 }
+
+                                balance -= cartTotal;
+                                balanceFloat = (balance * 100).ToString();
+                                balanceFloat = balanceFloat.Insert(balanceFloat.Length - 2, ".");
+
+                                outputs[14].str = "Current Balance: $" + balanceFloat;
+                                outputs[32].str = "Current Wallet Balance: $" + balanceFloat;
+
+                                cartValue = 0;
+                                cartTax = 0;
+                                cartTotal = 0;
+
+                                outputs[23].str = "$" + cartValue;
+                                outputs[24].str = "$" + cartTax;
+                                outputs[25].str = "$" + cartTotal;
+
                                 outputs[26].color = Color.White;
                                 
                                 state = AppState.Receipt;
@@ -561,9 +584,12 @@ namespace Terra
                             break;
                         case 18:
                             if (typedInput[7] != "")
-                                balance = (double)((int)((balance + Convert.ToDouble(typedInput[7])) * 100)) / 100;
-                            outputs[14].str = "Current Balance: $" + balance;
-                            outputs[32].str = "Current Wallet Balance: $" + balance;
+                                balance += Convert.ToDouble(typedInput[7]) * 100;
+
+                            balanceFloat = (balance * 100).ToString();
+                            balanceFloat = balanceFloat.Insert(balanceFloat.Length - 2, ".");
+                            outputs[14].str = "Current Balance: $" + balanceFloat;
+                            outputs[32].str = "Current Wallet Balance: $" + balanceFloat;
                             break;
                     }
 
@@ -631,8 +657,12 @@ namespace Terra
                     user.email = inputs[4].op.str;
             }
 
+            if (oldState == AppState.Receipt && state != AppState.Receipt)
+                tickets[2].tickets = new List<Ticket>();
+
             oldKb = Keyboard.GetState();
             oldMs = Mouse.GetState();
+            oldState = state;
 
             base.Update(gameTime);
         }
