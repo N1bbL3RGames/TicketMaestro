@@ -116,8 +116,8 @@ namespace Terra
             savedCard = "1237-9548-8923-7281";
 
             user = new AppUser("Firstname Lastname", "fml100000@utdallas.edu", "123-456-7890", "1234 Main St", "Password");
-            user.email = "";
-            user.setPassword("");
+            //user.email = "";
+            //user.setPassword("");
 
             buttons = new List<Button>();
             images = new List<Image>();
@@ -246,6 +246,12 @@ namespace Terra
                 "mi", 100, small, AppState.Plan)); //2
             tickets.Add(new TicketList(new Rectangle(35, 250, 290, 380), prompt, AppState.Plan)); //1
             //containers.Add(new Container(new Rectangle(35, 460, 290, 170), AppState.Plan)); //0
+
+            //Subsection of Plan AppState UI - Individual Tickets
+            tickets[1].tickets.Add(new Ticket("Samuel A. Rail Transportation\n$24, 53 mi, 2.5 hrs", 24, 53, 2.5, plus));
+            tickets[1].tickets.Add(new Ticket("Joe and Sons' Trams\n$15, 8 mi, 0.3 hrs", 15, 8, 0.3, plus));
+            tickets[1].tickets.Add(new Ticket("Bob's Passenger Lines\n$12, 20 mi, 1 hr", 12, 20, 1, plus));
+            tickets[1].tickets.Add(new Ticket("Carl Hanratty Railways\n$19, 30 mi, 1.5 hrs", 19, 30, 1.5, plus));
 
             //Payment Input AppState UI
             outputs.Add(new Output(small, new Vector2(111, 120), "Select Payment Method", Color.Black, AppState.PayInput)); //12
@@ -411,10 +417,49 @@ namespace Terra
                         sliders[sliderID].point.X = mouseRect.X - 10;
                         sliders[sliderID].updateValue();
                     }
-                else
-                    enableSlider = false;
+                    else
+                        enableSlider = false;
             }
+            
+            switch (state)
+            {
+                case AppState.Cart: //0
+                    if (ms.LeftButton == ButtonState.Pressed && oldMs.LeftButton != ButtonState.Pressed)
+                        for (int a = 0; a < tickets[0].tickets.Count; a++)
+                            if (mouseRect.Intersects(tickets[0].tickets[a].grab))
+                            {
+                                Ticket temp = tickets[0].tickets[a];
+                                temp.movement = plus;
+                                tickets[1].tickets.Add(temp);
+                                tickets[0].tickets.RemoveAt(a);
+                            }
+                    break;
+                case AppState.Plan: //1
+                    if (ms.LeftButton == ButtonState.Pressed && oldMs.LeftButton != ButtonState.Pressed)
+                        for (int a = 0; a < tickets[1].tickets.Count; a++)
+                            if (mouseRect.Intersects(tickets[1].tickets[a].grab))
+                            {
+                                Ticket temp = tickets[1].tickets[a];
+                                temp.movement = minus;
+                                tickets[0].tickets.Add(temp);
 
+                                cartValue += temp.cost;
+                                cartTax = (double)((int)((cartValue * 0.0825) * 100)) / 100;
+                                cartTotal = cartValue + cartTax;
+
+                                outputs[23].str = "$" + cartValue;
+                                outputs[24].str = "$" + cartTax;
+                                outputs[25].str = "$" + cartTotal;
+
+                                tickets[1].tickets.RemoveAt(a);
+                            }
+                    break;
+                case AppState.Receipt: //2
+                    break;
+                case AppState.Home: //3
+                    break;
+            }
+            
             for (int a = 0; a < themeBoxes.Count; a++)
                 if (ms.LeftButton == ButtonState.Pressed && oldMs.LeftButton != ButtonState.Pressed && 
                     state == AppState.ChangeUI && mouseRect.Intersects(themeBoxes[a]))
@@ -496,8 +541,9 @@ namespace Terra
                                 while (tickets[0].tickets.Count > 0)
                                 {
                                     Ticket temp = tickets[0].tickets[0];
+                                    temp.movement = blank;
                                     for (int b = 2; b <= 3; b++)
-                                        tickets[b].addTicket(temp, blank);
+                                        tickets[b].tickets.Add(temp);
 
                                     tickets[0].tickets.RemoveAt(0);
                                 }
@@ -516,7 +562,8 @@ namespace Terra
                         case 18:
                             if (typedInput[7] != "")
                                 balance = (double)((int)((balance + Convert.ToDouble(typedInput[7])) * 100)) / 100;
-                                outputs[32].str = "Current Wallet Balance: $" + balance;
+                            outputs[14].str = "Current Balance: $" + balance;
+                            outputs[32].str = "Current Wallet Balance: $" + balance;
                             break;
                     }
 
@@ -672,11 +719,24 @@ namespace Terra
                 {
                     spriteBatch.Draw(blank, tickets[a].box, Color.Black);
                     spriteBatch.Draw(blank, new Rectangle(tickets[a].box.X + 1, tickets[a].box.Y + 1, tickets[a].box.Width - 2, tickets[a].box.Height - 2), Color.White);
+                    int lastBoxY = tickets[a].box.Y;
 
                     for (int b = 0; b < tickets[a].tickets.Count; b++)
                     {
-                        spriteBatch.Draw(blank, tickets[a].tickets[b].box, Color.Black);
-                        spriteBatch.Draw(blank, new Rectangle(tickets[a].tickets[b].box.X + 1, tickets[a].tickets[b].box.Y + 1, tickets[a].tickets[b].box.Width - 2, tickets[a].tickets[b].box.Height - 2), secondaryTheme);
+                        if (!sliders[0].value.str.Equals("Any") && tickets[a].tickets[b].cost > Convert.ToDouble(sliders[0].value.str.Split(" ")[0]))
+                            continue;
+                        if (!sliders[1].value.str.Equals("Any") && tickets[a].tickets[b].time > Convert.ToDouble(sliders[1].value.str.Split(" ")[0]))
+                            continue;
+                        if (!sliders[2].value.str.Equals("Any") && tickets[a].tickets[b].distance > Convert.ToDouble(sliders[2].value.str.Split(" ")[0]))
+                            continue;
+                        
+                        spriteBatch.Draw(blank, new Rectangle(35, lastBoxY, tickets[a].box.Width, 40), Color.Black);
+                        spriteBatch.Draw(blank, new Rectangle(36, lastBoxY + 1, tickets[a].box.Width - 2, 38), Color.White);
+                        tickets[a].tickets[b].setGrab(new Rectangle(tickets[a].box.Right - 40, lastBoxY + 5, 30, 30));
+
+                        spriteBatch.Draw(tickets[a].tickets[b].movement, tickets[a].tickets[b].grab, Color.White);
+                        spriteBatch.DrawString(small, tickets[a].tickets[b].name, new Vector2(40, lastBoxY + 5), Color.Black);
+                        lastBoxY += 39;
                     }
                 }
 
@@ -913,45 +973,29 @@ namespace Terra
                 this.app = a;
                 this.tickets = new List<Ticket>();
             }
-
-            public void addTicket(Ticket t, Texture2D m)
-            {
-                Rectangle ticketBox = new Rectangle();
-
-                if (tickets.Count == 0)
-                    ticketBox = new Rectangle(box.X, box.Y, 290, 40);
-                else
-                    ticketBox = new Rectangle(box.X, tickets[tickets.Count - 1].box.Y + 39, 290, 40);
-
-                t.setValues(ticketBox, 
-                    new Image(m, new Rectangle(310, ticketBox.Y + 10, 20, 20)), 
-                    new Output(font, new Vector2(ticketBox.X + 10, ticketBox.Y + 13), t.name, Color.Black));
-            }
         }
 
         public class Ticket
         {
             public string name;
-            public int cost;
-            public string distance;
-            public string time;
-            public Rectangle box;
-            public Image movement;
-            public Output op;
+            public double cost;
+            public double distance;
+            public double time;
+            public Texture2D movement;
+            public Rectangle grab;
 
-            public Ticket(string n, int c, string d, string t)
+            public Ticket(string n, double c, double d, double t, Texture2D m)
             {
                 this.name = n;
                 this.cost = c;
                 this.distance = d;
                 this.time = t;
+                this.movement = m;
             }
 
-            public void setValues(Rectangle b, Image m, Output o)
+            public void setGrab(Rectangle g)
             {
-                box = b;
-                movement = m;
-                op = o;
+                this.grab = g;
             }
         }
 
