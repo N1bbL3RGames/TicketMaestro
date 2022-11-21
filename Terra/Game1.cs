@@ -77,7 +77,7 @@ namespace Terra
         public double cartValue;
         public double cartTax;
         public double cartTotal;
-        public double balance;
+        public int balance100;
         public string savedCard;
         public string balanceFloat;
 
@@ -115,9 +115,8 @@ namespace Terra
             cartValue = 0;
             cartTax = (double)((int)((cartValue * 0.0825) * 100)) / 100;
             cartTotal = cartValue + cartTax;
-            balance = 20;
-            balanceFloat = (balance * 100).ToString();
-            balanceFloat = balanceFloat.Insert(balanceFloat.Length - 2, ".");
+            balance100 = (int)(2000.00);
+            balanceFloat = balance100.ToString().Insert(balance100.ToString().Length - 2, ".");
             
             savedCard = "1237-9548-8923-7281";
 
@@ -543,7 +542,7 @@ namespace Terra
                             }
                             break;
                         case 12:
-                            if (balance >= cartTotal || !checks[1].active)
+                            if (((double)balance100 / 100) >= cartTotal || !checks[1].active)
                             {
                                 while (tickets[0].tickets.Count > 0)
                                 {
@@ -555,9 +554,8 @@ namespace Terra
                                     tickets[0].tickets.RemoveAt(0);
                                 }
 
-                                balance -= cartTotal;
-                                balanceFloat = (balance * 100).ToString();
-                                balanceFloat = balanceFloat.Insert(balanceFloat.Length - 2, ".");
+                                balance100 -= (int)(cartTotal * 100);
+                                balanceFloat = balance100.ToString().Insert(balance100.ToString().Length - 2, ".");
 
                                 outputs[14].str = "Current Balance: $" + balanceFloat;
                                 outputs[32].str = "Current Wallet Balance: $" + balanceFloat;
@@ -584,10 +582,9 @@ namespace Terra
                             break;
                         case 18:
                             if (typedInput[7] != "")
-                                balance += Convert.ToDouble(typedInput[7]) * 100;
+                                balance100 += (int)(Convert.ToDouble(typedInput[7]) * 100);
 
-                            balanceFloat = (balance * 100).ToString();
-                            balanceFloat = balanceFloat.Insert(balanceFloat.Length - 2, ".");
+                            balanceFloat = balance100.ToString().Insert(balance100.ToString().Length - 2, ".");
                             outputs[14].str = "Current Balance: $" + balanceFloat;
                             outputs[32].str = "Current Wallet Balance: $" + balanceFloat;
                             break;
