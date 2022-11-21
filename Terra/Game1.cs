@@ -729,7 +729,9 @@ namespace Terra
                             continue;
                         if (!sliders[2].value.str.Equals("Any") && tickets[a].tickets[b].distance > Convert.ToDouble(sliders[2].value.str.Split(" ")[0]))
                             continue;
-                        
+                        if (!typedInput[6].ToLower().Equals(tickets[a].tickets[b].name.Substring(0, typedInput[6].Length).ToLower()))
+                            continue;
+
                         spriteBatch.Draw(blank, new Rectangle(35, lastBoxY, tickets[a].box.Width, 40), Color.Black);
                         spriteBatch.Draw(blank, new Rectangle(36, lastBoxY + 1, tickets[a].box.Width - 2, 38), Color.White);
                         tickets[a].tickets[b].setGrab(new Rectangle(tickets[a].box.Right - 40, lastBoxY + 5, 30, 30));
