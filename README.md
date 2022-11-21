@@ -6,10 +6,11 @@ For Release Executable:
   3. Run application: Terra.exe
 
 Notes For Release Executable:
-  1. Email and password is set to "fml100000@utdallas.edu" and "Password", respectively
-  2. Buttons with red names do not have functionality
-  3. Buttons with black names do have functionality
-  4. Four buttons on the bottom and settings (Gear) icon at the top lead to various app pages
+  1. In case you are not able to run the application, you may need to redownload the release folder
+  2. Email and password is set to "fml100000@utdallas.edu" and "Password", respectively
+  3. Buttons with red names do not have functionality
+  4. Buttons with black names do have functionality
+  5. Four buttons on the bottom and settings (Gear) icon at the top lead to various app pages
 
 For Code Review:
   1. Go to master branch: https://github.com/N1bbL3RGames/TicketMaestro/tree/master
