@@ -121,7 +121,7 @@ namespace Terra
             savedCard = "1237-9548-8923-7281";
 
             user = new AppUser("Firstname Lastname", "fml100000@utdallas.edu", "123-456-7890", "1234 Main St", "Password");
-            //user.email = "";
+            user.email = "Username";
             //user.setPassword("");
 
             buttons = new List<Button>();
@@ -554,11 +554,14 @@ namespace Terra
                                     tickets[0].tickets.RemoveAt(0);
                                 }
 
-                                balance100 -= (int)(cartTotal * 100);
-                                balanceFloat = balance100.ToString().Insert(balance100.ToString().Length - 2, ".");
+                                if (checks[1].active)
+                                {
+                                    balance100 -= (int)(cartTotal * 100);
+                                    balanceFloat = balance100.ToString().Insert(balance100.ToString().Length - 2, ".");
 
-                                outputs[14].str = "Current Balance: $" + balanceFloat;
-                                outputs[32].str = "Current Wallet Balance: $" + balanceFloat;
+                                    outputs[14].str = "Current Balance: $" + balanceFloat;
+                                    outputs[32].str = "Current Wallet Balance: $" + balanceFloat;
+                                }
 
                                 cartValue = 0;
                                 cartTax = 0;
@@ -636,7 +639,7 @@ namespace Terra
                             else
                                 inputs[inputID].op.str += typeSorter(b, 3);
                         }
-
+                    
                     if (kb.IsKeyDown(Keys.OemPeriod) && !oldKb.IsKeyDown(Keys.OemPeriod))
                         inputs[inputID].op.str += typeSorter(-1, 4);
 
