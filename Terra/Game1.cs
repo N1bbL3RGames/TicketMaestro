@@ -200,6 +200,8 @@ namespace Terra
             textButtons.Add(new TextButton(new Image(blank, new Rectangle(205, 270, 120, 40)),
                 new Output(small, new Vector2(250, 282), "Login", Color.Black), AppState.Login)); //2
             checks.Add(new CheckBox(blank, new Rectangle(205, 238, 20, 20), Color.Black, false, AppState.Login)); //0
+            images.Add(new Image(blank, new Rectangle(325, 130, 35, 40), AppState.Login)); //0
+            images.Add(new Image(blank, new Rectangle(325, 180, 35, 40), AppState.Login)); //1
 
             //Profile AppState UI
             outputs.Add(new Output(prompt, new Vector2(35, 100), "Name", Color.Black, AppState.Profile)); //6
@@ -214,9 +216,13 @@ namespace Terra
                 new Output(small, new Vector2(40, 385), user.email, Color.Black), user.email, AppState.Profile)); //4
             inputs.Add(new TextBox(blank, new Rectangle(35, 490, 290, 40),
                 new Output(small, new Vector2(40, 505), user.address, Color.Black), user.email, AppState.Profile)); //5
+            images.Add(new Image(blank, new Rectangle(325, 130, 35, 40), AppState.Profile)); //2
+            images.Add(new Image(blank, new Rectangle(325, 250, 35, 40), AppState.Profile)); //3
+            images.Add(new Image(blank, new Rectangle(325, 370, 35, 40), AppState.Profile)); //4
+            images.Add(new Image(blank, new Rectangle(325, 490, 35, 40), AppState.Profile)); //5
 
             //Settings AppState UI
-            images.Add(new Image(profile, new Rectangle(130, 85, 100, 100), AppState.Settings)); //0
+            images.Add(new Image(profile, new Rectangle(130, 85, 100, 100), AppState.Settings)); //6
             outputs.Add(new Output(prompt, new Vector2(128, 190), "Edit Settings", Color.Black, AppState.Settings)); //10
             textButtons.Add(new TextButton(new Image(blank, new Rectangle(55, 245, 250, 40)),
                 new Output(small, new Vector2(160, 258), "Logout", Color.Black), AppState.Settings)); //3
@@ -250,13 +256,13 @@ namespace Terra
             sliders.Add(new Slider(new Output(small, new Vector2(35, 195), "Distance", Color.Black),
                 "mi", 100, small, AppState.Plan)); //2
             tickets.Add(new TicketList(new Rectangle(35, 250, 290, 380), prompt, AppState.Plan)); //1
-            //containers.Add(new Container(new Rectangle(35, 460, 290, 170), AppState.Plan)); //0
+            images.Add(new Image(blank, new Rectangle(325, 80, 35, 40), AppState.Plan)); //7
 
             //Subsection of Plan AppState UI - Individual Tickets
-            tickets[1].tickets.Add(new Ticket("Samuel A. Rail Transportation\n$24, 53 mi, 2.5 hrs", 24, 53, 2.5, plus));
-            tickets[1].tickets.Add(new Ticket("Joe and Sons' Trams\n$15, 8 mi, 0.3 hrs", 15, 8, 0.3, plus));
-            tickets[1].tickets.Add(new Ticket("Bob's Passenger Lines\n$12, 20 mi, 1 hr", 12, 20, 1, plus));
-            tickets[1].tickets.Add(new Ticket("Carl Hanratty Railways\n$19, 30 mi, 1.5 hrs", 19, 30, 1.5, plus));
+            tickets[1].tickets.Add(new Ticket("Samuel A. Rail Transportation\nDec 11, 7pm | $24, 53 mi, 2.5 hrs", 24, 53, 2.5, plus));
+            tickets[1].tickets.Add(new Ticket("Joe and Sons' Trams\nJan 15, 12pm | $15, 8 mi, 0.3 hrs", 15, 8, 0.3, plus));
+            tickets[1].tickets.Add(new Ticket("Bob's Passenger Lines\nDec 19, 4pm | $12, 20 mi, 1 hr", 12, 20, 1, plus));
+            tickets[1].tickets.Add(new Ticket("Carl Hanratty Railways\nDec 21, 10am | $19, 30 mi, 1.5 hrs", 19, 30, 1.5, plus));
 
             //Payment Input AppState UI
             outputs.Add(new Output(small, new Vector2(111, 120), "Select Payment Method", Color.Black, AppState.PayInput)); //12
@@ -266,8 +272,8 @@ namespace Terra
             outputs.Add(new Output(small, new Vector2(135, 330), "Card Ending In:", Color.Black, AppState.PayInput)); //16
             outputs.Add(new Output(small, new Vector2(165, 353), savedCard.Substring(15), Color.Black, AppState.PayInput)); //17
             outputs.Add(new Output(small, new Vector2(80, 520), "Please select a payment method.", Color.White, AppState.PayInput)); //18
-            images.Add(new Image(paypal, new Rectangle(65, 250, 40, 40), AppState.PayInput)); //2
-            images.Add(new Image(mastercard, new Rectangle(65, 330, 40, 40), AppState.PayInput)); //3
+            images.Add(new Image(paypal, new Rectangle(65, 250, 40, 40), AppState.PayInput)); //8
+            images.Add(new Image(mastercard, new Rectangle(65, 330, 40, 40), AppState.PayInput)); //9
             containers.Add(new Container(new Rectangle(35, 160, 290, 60), AppState.PayInput)); //1
             containers.Add(new Container(new Rectangle(35, 240, 290, 60), AppState.PayInput)); //2
             containers.Add(new Container(new Rectangle(35, 320, 290, 60), AppState.PayInput)); //3
@@ -298,7 +304,7 @@ namespace Terra
             //Home AppState UI
             outputs.Add(new Output(prompt, new Vector2(35, 185), "Active Tickets", Color.Black, AppState.Home)); //28
             tickets.Add(new TicketList(new Rectangle(35, 215, 290, 350), prompt, AppState.Home)); //3
-            images.Add(new Image(logo, new Rectangle(90, 70, 180, 100), AppState.Home)); //4
+            images.Add(new Image(logo, new Rectangle(90, 70, 180, 100), AppState.Home)); //10
             textButtons.Add(new TextButton(new Image(blank, new Rectangle(35, 585, 290, 40)),
                 new Output(small, new Vector2(155, 598), "Support", Color.Black), AppState.Home)); //13
 
@@ -318,11 +324,12 @@ namespace Terra
             outputs.Add(new Output(small, new Vector2(35, 390), "Current Card on File: " + savedCard, Color.Black, AppState.AddFunds)); //31
             outputs.Add(new Output(small, new Vector2(35, 420), "Current Wallet Balance: $" + balanceFloat, Color.Black, AppState.AddFunds)); //32
             containers.Add(new Container(new Rectangle(35, 170, 290, 180), AppState.AddFunds)); //6
-            images.Add(new Image(visa, new Rectangle(60, 190, 60, 60), AppState.AddFunds)); //5
-            images.Add(new Image(mastercard, new Rectangle(150, 190, 60, 60), AppState.AddFunds)); //6
-            images.Add(new Image(discover, new Rectangle(240, 190, 60, 60), AppState.AddFunds)); //7
-            images.Add(new Image(americanExpress, new Rectangle(105, 270, 60, 60), AppState.AddFunds)); //8
-            images.Add(new Image(paypal, new Rectangle(195, 270, 60, 60), AppState.AddFunds)); //9
+            images.Add(new Image(visa, new Rectangle(60, 190, 60, 60), AppState.AddFunds)); //11
+            images.Add(new Image(mastercard, new Rectangle(150, 190, 60, 60), AppState.AddFunds)); //12
+            images.Add(new Image(discover, new Rectangle(240, 190, 60, 60), AppState.AddFunds)); //13
+            images.Add(new Image(americanExpress, new Rectangle(105, 270, 60, 60), AppState.AddFunds)); //14
+            images.Add(new Image(paypal, new Rectangle(195, 270, 60, 60), AppState.AddFunds)); //15
+            images.Add(new Image(blank, new Rectangle(325, 450, 35, 40), AppState.AddFunds)); //16
             inputs.Add(new TextBox(blank, new Rectangle(35, 450, 290, 40),
                 new Output(small, new Vector2(40, 465), "$", Color.Black), "", AppState.AddFunds)); //7
             textButtons.Add(new TextButton(new Image(blank, new Rectangle(35, 510, 145, 40)),
@@ -342,14 +349,14 @@ namespace Terra
             themePrimaries.Add(Color.DarkGreen);
             themePrimaries.Add(Color.DarkBlue);
             themePrimaries.Add(Color.DarkViolet);
-            themePrimaries.Add(Color.Black);
+            themePrimaries.Add(Color.DarkSalmon);
             themeSecondaries.Add(Color.LightPink);
             themeSecondaries.Add(Color.LightYellow);
             themeSecondaries.Add(new Color(139, 25, 139, 150));
             themeSecondaries.Add(Color.LightGreen);
             themeSecondaries.Add(Color.LightBlue);
             themeSecondaries.Add(new Color(148, 50, 211, 150));
-            themeSecondaries.Add(Color.LightGray);
+            themeSecondaries.Add(new Color(233, 150, 122, 200));
 
             //Default Input Values
             typedInput.Add("");
@@ -436,6 +443,15 @@ namespace Terra
                                 Ticket temp = tickets[0].tickets[a];
                                 temp.movement = plus;
                                 tickets[1].tickets.Add(temp);
+
+                                cartValue -= temp.cost;
+                                cartTax = (double)((int)((cartValue * 0.0825) * 100)) / 100;
+                                cartTotal = cartValue + cartTax;
+
+                                outputs[23].str = "$" + cartValue;
+                                outputs[24].str = "$" + cartTax;
+                                outputs[25].str = "$" + cartTotal;
+
                                 tickets[0].tickets.RemoveAt(a);
                             }
                     break;
@@ -623,7 +639,7 @@ namespace Terra
                     for (int b = 65; b <= 90; b++)
                         if (kb.IsKeyDown((Keys)b) && !oldKb.IsKeyDown((Keys)b) && inputID != 7)
                         {
-                            if (kb.IsKeyDown(Keys.LeftShift))
+                            if (kb.IsKeyDown(Keys.LeftShift) || kb.IsKeyDown(Keys.RightShift))
                                 inputs[inputID].op.str += typeSorter(b, 0);
 
                             else
@@ -633,7 +649,7 @@ namespace Terra
                     for (int b = 48; b <= 57; b++)
                         if (kb.IsKeyDown((Keys)b) && !oldKb.IsKeyDown((Keys)b))
                         {
-                            if (kb.IsKeyDown(Keys.LeftShift))
+                            if (kb.IsKeyDown(Keys.LeftShift) || kb.IsKeyDown(Keys.RightShift))
                                 inputs[inputID].op.str += typeSorter(b, 2);
 
                             else
