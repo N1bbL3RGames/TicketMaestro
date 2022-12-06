@@ -2,7 +2,7 @@
 
 For Release Executable:
   1. Go to link: https://cometmail-my.sharepoint.com/:f:/g/personal/bxt210005_utdallas_edu/Ei43gjkOYOdMmcMZIfDfWnoBJJ4oTlezfH-n9s87lx-Tiw?e=it6LDC
-  2. Download folder for the most recent release: "Release v1.6" (Current)
+  2. Download folder for the most recent release: "Release v2.0" (Current)
   3. Run application: Terra.exe
 
 Notes For Release Executable:
