@@ -429,8 +429,8 @@ namespace Terra
                         sliders[sliderID].point.X = mouseRect.X - 10;
                         sliders[sliderID].updateValue();
                     }
-                    else
-                        enableSlider = false;
+                if (ms.LeftButton != ButtonState.Pressed && oldMs.LeftButton == ButtonState.Pressed)
+                    enableSlider = false;
             }
             
             switch (state)
