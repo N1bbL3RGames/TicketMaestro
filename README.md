@@ -6,14 +6,14 @@ For Release Executable:
   3. Run application: Terra.exe
 
 Notes For Release Executable:
-  1. In case you are not able to run the application, you may need to redownload the release folder
-  2. Email and password is set to "Username" and "Password", respectively
-  3. Buttons with red names do not have functionality
-  4. Buttons with black names do have functionality
-  5. Four buttons on the bottom and settings (Gear) icon at the top lead to various app pages
+  1. Must be run on a Windows machine
+  2. In case you are not able to run the application, you may need to redownload the release folder
+  3. Email and password is set to "Username" and "Password", respectively
+  4. Buttons with red names do not have functionality
+  5. Buttons with black names do have functionality
+  6. Four buttons on the bottom and settings (Gear) icon at the top lead to various app pages
 
 For Code Review:
   1. Go to master branch: https://github.com/N1bbL3RGames/TicketMaestro/tree/master
   2. Go to folder: Terra
   3. Go to file Game1.cs: https://github.com/N1bbL3RGames/TicketMaestro/blob/master/Terra/Game1.cs
-
